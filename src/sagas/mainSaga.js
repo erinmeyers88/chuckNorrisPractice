@@ -1,4 +1,5 @@
 import {all, call, put, takeEvery, select} from 'redux-saga/effects';
+import {delay} from 'redux-saga';
 import axiosUtils from '../utils/axiosUtils';
 import * as Types from '../constants/actionTypes';
 
@@ -25,11 +26,9 @@ function* getJokes() {
       firstName = 'Chuck';
       lastName = 'Norris';
     }
-
-
     const endpoint = 'http://api.icndb.com/jokes/random/' + jokeCount + '?escape=javascript&firstName=' + firstName + '&lastName=' + lastName + '&limitTo=' + jokeTypesFromState;
     const jokes = yield call(axiosUtils.get, endpoint);
-
+    yield call(delay, 500);
     yield put({type: Types.GET_JOKES_SUCCESS, jokes: jokes.value});
   } catch (err) {
     yield put({type: Types.GET_JOKES_FAILURE, err});
@@ -40,6 +39,7 @@ function* getJokeTypes() {
   try {
     const endpoint = 'http://api.icndb.com/categories';
     const jokeTypes = yield call(axiosUtils.get, endpoint);
+    yield call(delay, 1300);
     yield put({type: Types.GET_JOKE_TYPES_SUCCESS, jokeTypes: jokeTypes.value});
   } catch (e) {
     yield put({type: Types.GET_JOKE_TYPES_FAILURE});

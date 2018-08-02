@@ -1,11 +1,14 @@
-import styled from 'styled-components';
+import styled, {keyframes} from 'styled-components';
+
+const rotate360 = keyframes`
+from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+`;
 
 const StyledImage = styled.img`
 height: 150px;
-align-self: flex-start;
-position: absolute;
-top: 20px;
-left: 20px;
+justify-self: start;
+animation: ${props => props.isSpinning ? `${rotate360} infinite 1.5s linear` : ''}
 `;
 
 export default StyledImage;

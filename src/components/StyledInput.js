@@ -6,6 +6,7 @@ margin: 10px;
 padding: 10px;
 font-size: 1em;
 font-weight: 200;
+background-color: white;
 `;
 
 export default StyledInput;

@@ -1,50 +1,49 @@
-import React, {Component} from 'react';
-import './App.css';
+import React from 'react';
 import StyledButton from './StyledButton';
+import StyledInputSection from './StyledInputSection';
 import StyledInput from './StyledInput';
 import StyledHeader from './StyledHeader';
 import StyledImage from './StyledImage';
 import StyledLabel from './StyledLabel';
-
+import StyledLoader from './StyledLoader';
 import JokeList from './JokeList';
 import Chuck from '../chuck.png';
 
-class App extends Component {
+const App = ({jokeCount, changeJokeCount, firstName, changeFirstName, lastName, changeLastName, jokeTypeOptions, jokeTypes, changeJokeTypes, getJokes, jokes, jokesLoading, jokeTypeOptionsLoading}) =>
+  <div style={{height: '100%'}}>
+    {!jokeTypeOptionsLoading && <StyledHeader>
+      <StyledImage src={Chuck} id="chuck" isSpinning={jokesLoading}/>
 
-  render() {
-    return (
-      <div className="App">
-        <StyledHeader className="App-header">
-          <StyledImage src={Chuck} id="chuck"/>
-          <StyledInput id="jokeCount" placeholder="How many jokes?" value={this.props.jokeCount}
-                       onChange={(e) => this.props.changeJokeCount(e.target.value)}/>
-          <StyledInput id="firstName" placeholder="First Name" value={this.props.firstName}
-                       onChange={(e) => this.props.changeFirstName(e.target.value)}/>
-          <StyledInput id="lastName" placeholder="Last Name" value={this.props.lastName}
-                       onChange={(e) => this.props.changeLastName(e.target.value)}/>
+      <StyledInputSection>
+        <StyledInput id="jokeCount" placeholder="How many jokes?" value={jokeCount}
+                     onChange={(e) => changeJokeCount(e.target.value)}/>
+        <StyledInput id="firstName" placeholder="First Name" value={firstName}
+                     onChange={(e) => changeFirstName(e.target.value)}/>
+        <StyledInput id="lastName" placeholder="Last Name" value={lastName}
+                     onChange={(e) => changeLastName(e.target.value)}/>
+        {
+          jokeTypeOptions.map(type => <React.Fragment key={type}>
+            <StyledInput type="checkbox" value={type} checked={jokeTypes.indexOf(type) >= 0}
+                         onChange={(e) => changeJokeTypes(e.target.value)}/>
+            <StyledLabel>{type.charAt(0).toUpperCase() + type.substr(1)} Jokes</StyledLabel>
+          </React.Fragment>)
+        }
+      </StyledInputSection>
 
-          {
-            this.props.jokeTypeOptions.map(type => <React.Fragment key={type}>
-              <StyledInput type="checkbox" value={type} checked={this.props.jokeTypes.indexOf(type) >= 0} onChange={(e) => this.props.changeJokeTypes(e.target.value)}/>
-              <StyledLabel>{type} Jokes</StyledLabel>
-            </React.Fragment>)
+      <StyledButton
+        onClick={
+          (e) => {
+            e.preventDefault();
+            getJokes();
           }
+        }>Get Jokes</StyledButton>
 
-          <StyledButton
-            onClick={
-              (e) => {
-                e.preventDefault();
-                this.props.getJokes();
-                document.getElementById('chuck').classList.add('spin-image');
-                setTimeout(() => document.getElementById('chuck').classList.remove('spin-image'), 1500);
-              }
-            }>Get
-            Jokes</StyledButton>
-        </StyledHeader>
-        <JokeList jokes={this.props.jokes}/>
-      </div>
-    );
-  }
-}
+    </StyledHeader>}
+    {!jokeTypeOptionsLoading && <JokeList jokes={jokes}/>}
+    {jokeTypeOptionsLoading && <StyledLoader>
+      <StyledImage src={Chuck} id="chuck" isSpinning/>
+    </StyledLoader>}
+
+  </div>;
 
 export default App;

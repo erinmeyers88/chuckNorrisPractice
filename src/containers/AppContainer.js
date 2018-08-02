@@ -12,6 +12,7 @@ class AppContainer extends Component {
   render() {
     return <App {...this.props}/>;
   }
+
 }
 
 const mapStateToProps = (state) => ({
@@ -20,7 +21,9 @@ const mapStateToProps = (state) => ({
   firstName: state.main.firstName,
   lastName: state.main.lastName,
   jokeTypeOptions: state.main.jokeTypeOptions,
-  jokeTypes: state.main.jokeTypes
+  jokeTypes: state.main.jokeTypes,
+  jokesLoading: state.main.jokesLoading,
+  jokeTypeOptionsLoading: state.main.jokeTypeOptionsLoading
 });
 
 const mapDispatchToProps = {

@@ -6,21 +6,35 @@ const initialState = {
   firstName: '',
   lastName: '',
   jokeTypeOptions: [],
-  jokeTypes: []
+  jokeTypes: [],
+  jokesLoading: false,
+  jokeTypesLoading: false
 };
 
 const mainReducer = (state = initialState, action) => {
   switch (action.type) {
+    case Types.GET_JOKES_REQUEST:
+      return {
+        ...state,
+        jokesLoading: true
+      };
+    case Types.GET_JOKE_TYPES_REQUEST:
+      return {
+        ...state,
+        jokeTypeOptionsLoading: true
+      };
     case Types.GET_JOKE_TYPES_SUCCESS:
       return {
         ...state,
         jokeTypeOptions: action.jokeTypes,
-        jokeTypes: action.jokeTypes
+        jokeTypes: action.jokeTypes,
+        jokeTypeOptionsLoading: false
       };
     case Types.GET_JOKES_SUCCESS:
       return {
         ...state,
-        jokes: action.jokes
+        jokes: action.jokes,
+       jokesLoading: false
       };
     case Types.CHANGE_JOKE_COUNT:
       let jokeCount = action.jokeCount;
