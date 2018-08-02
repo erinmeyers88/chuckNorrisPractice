@@ -1,12 +1,12 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux';
-import {getJokes, changeJokeCount, changeFirstName, changeLastName} from '../actions';
+import {getJokes, changeJokeCount, changeFirstName, changeLastName, getJokeTypes, changeJokeTypes} from '../actions';
 import App from '../components/App';
 
 class AppContainer extends Component {
 
   componentDidMount() {
-    this.props.getJokes(5, 'Chuck', 'Norris');
+    this.props.getJokeTypes();
   }
 
   render() {
@@ -18,14 +18,18 @@ const mapStateToProps = (state) => ({
   jokes: state.main.jokes,
   jokeCount: state.main.jokeCount,
   firstName: state.main.firstName,
-  lastName: state.main.lastName
+  lastName: state.main.lastName,
+  jokeTypeOptions: state.main.jokeTypeOptions,
+  jokeTypes: state.main.jokeTypes
 });
 
 const mapDispatchToProps = {
   getJokes,
   changeJokeCount,
   changeFirstName,
-  changeLastName
+  changeLastName,
+  getJokeTypes,
+  changeJokeTypes
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AppContainer);

@@ -1,19 +1,6 @@
-.App {
-  text-align: center;
-}
-
 .spin-image {
-  animation: spin infinite 2s linear;
+  animation: spin infinite 1.5s linear;
   height: 100px;
-}
-
-
-.App-title {
-  font-size: 1.5em;
-}
-
-.App-intro {
-  font-size: large;
 }
 
 @keyframes spin {
